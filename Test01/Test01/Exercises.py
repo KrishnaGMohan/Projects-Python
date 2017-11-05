@@ -104,7 +104,7 @@ print([i for i in sorted(a) if i < n])
 # Exercise 4 (and Solution)
 
 # Create a program that asks the user for a number and then prints out a list of all the 
-# divisors of that number. (If you don’t know what a divisor is, it is a number that divides 
+# divisors of that number. (If you donï¿½t know what a divisor is, it is a number that divides 
 # evenly into another number. For example, 13 is a divisor of 26 because 26 / 13 has no remainder.)
 
 n = int(input("Enter a number: "))
@@ -152,7 +152,7 @@ for i in a:
 print(common)
 
 
-# 2.Write this in one line of Python (don’t worry if you can’t figure this out at this point - we’ll get to it soon)
+# 2.Write this in one line of Python (donï¿½t worry if you canï¿½t figure this out at this point - weï¿½ll get to it soon)
 import random
 a = random.sample(range(1,101), 15)
 b = random.sample(range(1,101), 30)
@@ -175,7 +175,7 @@ else:
 #------------------------------------------------------------------------------------------------
 # Exercise 7 (and Solution)
 
-# Let’s say I give you a list saved in a variable: a = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]. 
+# Letï¿½s say I give you a list saved in a variable: a = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]. 
 # Write one line of Python that takes this list a and makes a new list that has only the even 
 # elements of this list in it.
 
@@ -238,7 +238,7 @@ while ui.lower() != 'e':
         ui = 'e'
     
 # Extras:
-# Keep the game going until the user types “exit”
+# Keep the game going until the user types ï¿½exitï¿½
 # Keep track of how many guesses the user has taken, and when the game ends, print this out.
 
 
@@ -286,5 +286,45 @@ def firstLast(r):
     return [ r[0], r[-1] ]
 
 print(firstLast(a))
+
+#------------------------------------------------------------------------------------------------
+# Fibonacci    
+ 
+
+# Exercise 13 (and Solution)
+
+# Write a program that asks the user how many Fibonnaci numbers to generate and then generates them.
+# Take this opportunity to think about how you can use functions. Make sure to ask the user to enter 
+# the number of numbers in the sequence to generate.(Hint: The Fibonnaci seqence is a sequence of 
+# numbers where the next number in the sequence is the sum of the previous two numbers in the sequence. 
+# The sequence looks like this: 1, 1, 2, 3, 5, 8, 13, â€¦)
+
+def fib(n):   # return Fibonacci series up to n
+    result = []
+    a, b = 0, 1
+    while n != 0:
+        result.append(b)
+        a, b = b, a+b
+        n-=1
+    return result
+
+x = int(input("Enter how many Fibinocci numbers are needed: "))
+print(fib(x))
+
+
+#------------------------------------------------------------------------------------------------
+
+# Exercise 15 (and Solution)
+
+# Write a program (using functions!) that asks the user for a long string containing multiple words. 
+# Print back to the user the same string, except with the words in backwards order
+
+
+stra = 'This is a string' 
+revword = stra.split() 
+revword.reverse() 
+revword=' '.join(revword)
+print(revword)
+
 
 
