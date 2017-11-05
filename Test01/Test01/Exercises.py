@@ -328,3 +328,85 @@ print(revword)
 
 
 
+#------------------------------------------------------------------------------------------------
+# Exercise 16 (and Solution)
+
+# Write a password generator in Python. Be creative with how you generate passwords - strong passwords 
+# have a mix of lowercase letters, uppercase letters, numbers, and symbols. The passwords should be 
+# random, generating a new password every time the user asks for a new password. Include your run-time 
+# code in a main method.
+
+# Extra:
+# Ask the user how strong they want their password to be. For weak passwords, pick a word or two from a list.
+
+import random
+ 
+n = random.randint(12, 27)
+s = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+:?ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+lens = len(s)-1
+password = ""
+for i in range(n):
+    password+=s[random.randint(0,lens)]
+
+print(password)
+
+#------------------------------------------------------------------------------------------------
+# Exercise 18 (and Solution)
+
+# Create a program that will play the “cows and bulls” game with the user. The game works like this:
+
+# Randomly generate a 4-digit number. Ask the user to guess a 4-digit number. For every digit that 
+# the user guessed correctly in the correct place, they have a “cow”. For every digit the user guessed 
+# correctly in the wrong place is a “bull.” Every time the user makes a guess, tell them how many 
+# “cows” and “bulls” they have. Once the user guesses the correct number, the game is over. Keep track 
+# of the number of guesses the user makes throughout the game and tell the user at the end.
+
+import random
+
+# num = str(random.randint(1000,9999))
+
+# 4-digit number without repetition
+num = "0"
+
+while int(num) < 1000:
+    num = ""
+    numRange = list(range(0, 9))
+    random.shuffle(numRange)
+
+    for i in range(4):
+        num += str(numRange.pop())
+
+print(num) # cheat!
+
+tries = 0
+ui = ''
+
+while ui != 'e':
+    ui = input("Guess the 4-digit number or 'e' to exit: ")
+
+    if ui == 'e':
+        print("You tried %d time(s) but did not get the number - %s." % (tries, num))
+        break
+    
+    tries += 1
+    numtmp = 'x'+ num + 'x'
+    uitmp = 'x'+ ui + 'x'
+    bulls = 0
+    cows = 0
+
+    for i in range(1,5):
+        if uitmp[i] == numtmp[i]:
+            cows += 1
+            numtmp = numtmp[:i] + 'x' + numtmp[i+1:]
+            uitmp  = uitmp[:i]  + 'x' + uitmp[i+1:]
+
+    if cows != 4:
+        for i in range(1,5):
+            if (uitmp[i] != 'x') and (uitmp[i] in numtmp):
+                bulls += 1
+                uitmp  = uitmp[:i] + 'x' + uitmp[i+1:]
+        print("%d cows, %d bulls.\n" % (cows, bulls))
+    else:
+        print("You've got the number! - %s - in %d tries." % (num, tries))
+        ui = 'e'
+
