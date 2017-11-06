@@ -413,3 +413,159 @@ while ui != 'e':
 
 #------------------------------------------------------------------------------------------------
 
+# Exercise 20 (and Solution)
+
+# Write a function that takes an ordered list of numbers (a list where the elements are in order 
+# from smallest to largest) and another number. The function decides whether or not the given 
+# number is inside the list and returns (then prints) an appropriate boolean.
+
+# Extras:
+# Use binary search.
+
+import random
+
+lst = []
+for i in range(10):
+    lst.append(random.randint(1,100))
+lst = sorted(lst)
+print(lst)
+
+def findElement(n, lst):
+    try:
+        pos = lst.index(n)
+    except:
+        pos = -1
+    return pos
+
+#print(findElement(32, lst))
+
+def findElementBinary(n, lst):
+    p1 = 0
+    p2 = len(lst) - 1
+
+    while int((p2-p1) / 2) != 0:
+        p = p1 + int((p2-p1) / 2)
+        if n == lst[p]:
+             return p
+        elif n < lst[p]:
+            p2 = p
+        else: 
+            p1 = p
+    return -1
+
+print(lst)
+print(findElementBinary(68, lst))
+
+#------------------------------------------------------------------------------------------------
+# Exercise 24 (and Solution)
+
+# This exercise is Part 1 of 4 of the Tic Tac Toe exercise series. The other exercises are: Part 2, 
+# Part 3, and Part 4.
+
+# Time for some fake graphics! Let’s say we want to draw game boards that look like this:
+
+#        --- --- --- 
+#       |   |   |   | 
+#        --- --- ---  
+#       |   |   |   | 
+#        --- --- ---  
+#       |   |   |   | 
+#        --- --- --- 
+
+# This one is 3x3 (like in tic tac toe). Obviously, they come in many other sizes (8x8 for chess, 
+# 19x19 for Go, and many more).
+
+# Ask the user what size game board they want to draw, and draw it for them to the screen 
+# using Python’s print statement.
+
+n = int(input("Game board size? :"))
+
+for i in range(n):
+    print("\t" + " ---" * n)
+    print("\t" + "|   " * n + "|")
+print("\t" + " ---" * n)
+
+
+
+#------------------------------------------------------------------------------------------------
+
+# Exercise 25 (and Solution)
+
+# You, the user, will have in your head a number between 0 and 100. The program will guess a number, 
+# and you, the user, will say whether it is too high, too low, or your number.
+
+# At the end of this exchange, your program should print out how many guesses it took to get your number.
+
+# As the writer of this program, you will have to choose how your program will strategically guess.
+
+tries = 0
+n1 = 0
+n2 = 100
+ans = ""
+
+while int((n2-n1)/2) != 0 and ans != 'c':
+    print (n1, " ", n2)
+    n = n1 + int((n2-n1) / 2)
+    ans = input("Is it " + str(n) + "? Too High/Too Low/Correct (h/l/c)")
+    tries += 1
+    if ans == 'c':
+        print("Ans: %d,  found in %d tries!" % (n, tries))
+    if ans == 'l':
+        n1 = n
+    elif ans == 'h':
+        n2 = n
+
+if int((n2-n1)/2) == 0:
+    print("Something wrong - no guess.  %d tries." % (tries))
+
+
+#------------------------------------------------------------------------------------------------
+# If a game of Tic Tac Toe is represented as a list of lists, like so:
+
+# game = [[1, 2, 0],
+# 	[2, 1, 0],
+# 	[2, 1, 1]]
+
+# where a 0 means an empty square, a 1 means that player 1 put their token in that space, and a 2 
+# means that player 2 put their token in that space.
+
+# Your task this week: given a 3 by 3 list of lists that represents a Tic Tac Toe game board, 
+# tell me whether anyone has won, and tell me which player won, if any. A Tic Tac Toe win is 3 in 
+# a row - either in a row, a column, or a diagonal. Don’t worry about the case where TWO people have 
+# won - assume that in every board there will only be one winner.
+
+
+def isSame(l):
+    return len(set(l)) == 1 and l[0] != 0
+
+
+def checkGrid(game):
+    for i in range(3):
+        if isSame(game[i]):
+            return game[i][0]
+
+    # transpose list of lists
+    game = list(map(list, zip(*game)))
+    for i in range(3):
+        if isSame(game[i]):
+            return game[i][0]
+        
+    diag1 = []
+    diag2 = []
+    for i in range(3):
+        diag1.append(game[i][i])
+        diag2.append(game[i][2-i])
+
+    if isSame(diag1):
+        return diag1[0]
+    if isSame(diag2):
+        return diag2[0]
+
+    return 0
+
+game = [[0, 1, 0],
+	[2, 1, 0],
+	[2, 1, 1]]
+
+
+print(checkGrid(game))
