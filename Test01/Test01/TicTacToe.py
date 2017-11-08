@@ -1,11 +1,12 @@
 #------------------------------------------------------------------------------------------------
 # Tic-Tac-Toe game
+import os
 
-def initBoard():
+def init_board():
     board = [[0 for i in range(3)] for j in range(3)]
     return board
 
-def displayBoard(board):
+def display_board(board):
     sym = ' xo'
     print("\t    " + "  1 " + "  2 " + "  3 ")
     for i in range(3):
@@ -16,62 +17,68 @@ def displayBoard(board):
 def play(board, user):
     correct = False
     while not correct:
-        pos = input("Player " + str(user+1) + " move ? row,col : ")
-        posList = pos.split(",")
-        row = int(posList[0])-1
-        col = int(posList[1])-1
+        display_board(board)
+        pos = input("Player " + str(user) + " move? row,col : ")
+        if pos == 'q':
+            os._exit(1)
+        pos_list = pos.split(",")
+        row = int(pos_list[0])-1
+        col = int(pos_list[1])-1
 
         if board[row][col] == 0:
-            board[row][col] = user+1
+            board[row][col] = user
             correct = True
         else:
-            print("That square %s is taken!\n" % pos)
+            print("That square [%s] is taken!\n" % pos)
     return board
 
 
-def checkBoardForWinner(board):
-    def isSame(l):
-        return len(set(l)) == 1 and l[0] != 0
+def check_board_for_winner(board):
+    def is_same(lst):
+        return len(set(lst)) == 1 and lst[0] != 0
 
-    for i in range(3):
-        if isSame(board[i]):
-            return board[i][0]
-
-    # transpose list of lists
-    board = list(map(list, zip(*game)))
-
-    for i in range(3):
-        if isSame(board[i]):
-            return board[i][0]
-        
+    # Check rows and columns
+    for j in range(2):
+        for i in range(3):
+            if is_same(board[i]):
+                return board[i][0]
+        # transpose list of lists
+        board = list(map(list, zip(*board)))
+    
+    # Check diagonals
     diag = [board[i][i] for i in range(3)]
-    if isSame(diag):
+    if is_same(diag):
         return diag[0]
 
     diag = [board[i][2-i] for i in range(3)]
-    if isSame(diag):
+    if is_same(diag):
         return diag[0]
 
     return 0
 
 
 # Main
-game = initBoard()
+def main():
+    game = init_board()
+    
+    empty_squares = 9
+    winner = 0
+    user = 1
 
-emptySquares = 9
-winner = 0
-user = 1
+    while empty_squares != 0 and winner == 0:
+        user = 1 - user
+        game = play(game, user+1)
+        empty_squares-=1
+        winner = check_board_for_winner(game)
 
-while emptySquares != 0 and winner == 0:
-    user = 1 - user
-    displayBoard(game)
-    game = play(game, user)
-    emptySquares-=1
-    winner = checkBoardForWinner(game)
+    display_board(game)
 
-displayBoard(game)
+    if winner == 0:
+        print("Draw!")
+    else:
+        print("player %d wins!" % (user+1))
 
-if winner == 0:
-    print("Draw!")
-else:
-    print("player %d wins!" % (user+1))
+
+
+if __name__=="__main__":
+    main()
