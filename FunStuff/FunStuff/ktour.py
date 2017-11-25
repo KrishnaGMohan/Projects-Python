@@ -7,7 +7,9 @@ random.seed()
 random.randint(0,0)
 
 def init_board():
-	''' initialized board to 0s '''
+    """
+    Intializes a 8 x 8 matrix with 0s
+    """
     board = [[0 for i in range(8)] for j in range(8)]
     return board
 
