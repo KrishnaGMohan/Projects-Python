@@ -31,7 +31,7 @@ def display_board(board):
     print("\t    " + " ----" * 8)
 
 def list_moves(board, pos):
-	""" Finds all possible moves on a board from a given position """
+	""" Finds all possible moves on a board from a given position  -- test vs"""
     rx = pos[0]
     cx = pos[1] 
     kr = [-2, -2, -1, -1,  1, 1,  2, 2]
