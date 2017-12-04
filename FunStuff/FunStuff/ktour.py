@@ -83,4 +83,4 @@ while move_number <= 63:
     
 
 display_board(game)
-print(choices)
+
